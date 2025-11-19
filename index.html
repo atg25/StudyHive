@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STUDYHIVE - Unapologetically Effective Study Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --black: #0a0a0a;
+        --white: #ffffff;
+        --honey: #ffb800;
+        --gray: #1a1a1a;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* BRUTALIST HEADER */
+      header {
+        border-bottom: 4px solid var(--white);
+        padding: 2rem;
+        position: sticky;
+        top: 0;
+        background: var(--black);
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -2px;
+        position: relative;
+      }
+
+      .logo::before {
+        content: "⬢";
+        color: var(--honey);
+        margin-right: 0.5rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--white);
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        border: 3px solid transparent;
+        padding: 0.5rem 1rem;
+        transition: none;
+      }
+
+      .nav-links a:hover {
+        border: 3px solid var(--honey);
+        transform: translate(-2px, -2px);
+        box-shadow: 4px 4px 0 var(--honey);
+      }
+
+      /* HERO SECTION */
+      .hero {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 6rem 2rem;
+        position: relative;
+      }
+
+      h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(3rem, 10vw, 8rem);
+        line-height: 0.9;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        position: relative;
+      }
+
+      h1 .highlight {
+        color: var(--honey);
+        text-shadow: 6px 6px 0 var(--black), 7px 7px 0 var(--white);
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        max-width: 800px;
+        margin-bottom: 3rem;
+        border-left: 6px solid var(--honey);
+        padding-left: 2rem;
+        font-weight: 400;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 3rem;
+        margin-bottom: 3rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .stat {
+        border: 3px solid var(--white);
+        padding: 1.5rem;
+        background: var(--gray);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        color: var(--honey);
+        font-weight: 700;
+      }
+
+      .stat-label {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+      }
+
+      /* BRUTALIST BUTTONS */
+      .cta-group {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 1.5rem 3rem;
+        border: 4px solid var(--black);
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: none;
+        letter-spacing: 1px;
+      }
+
+      .btn-primary {
+        background: var(--honey);
+        color: var(--black);
+        box-shadow: 8px 8px 0 var(--white);
+      }
+
+      .btn-primary:hover {
+        transform: translate(4px, 4px);
+        box-shadow: 4px 4px 0 var(--white);
+      }
+
+      .btn-secondary {
+        background: var(--black);
+        color: var(--white);
+        border: 4px solid var(--white);
+      }
+
+      .btn-secondary:hover {
+        background: var(--white);
+        color: var(--black);
+      }
+
+      /* WHY NOT CHATGPT SECTION */
+      .why-section {
+        background: var(--white);
+        color: var(--black);
+        padding: 6rem 2rem;
+        border-top: 8px solid var(--honey);
+        border-bottom: 8px solid var(--honey);
+        margin: 4rem 0;
+      }
+
+      .why-section .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2rem, 6vw, 4rem);
+        margin-bottom: 3rem;
+        text-transform: uppercase;
+        line-height: 1;
+      }
+
+      .reasons-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .reason-card {
+        border: 4px solid var(--black);
+        padding: 2rem;
+        background: var(--white);
+        position: relative;
+      }
+
+      .reason-card::before {
+        content: "⬢";
+        font-size: 3rem;
+        color: var(--honey);
+        position: absolute;
+        top: -1.5rem;
+        left: 1rem;
+        background: var(--white);
+        padding: 0 0.5rem;
+      }
+
+      .reason-card h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      /* FEATURES SECTION */
+      .features {
+        max-width: 1400px;
+        margin: 6rem auto;
+        padding: 0 2rem;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+
+      .feature-card {
+        border: 4px solid var(--white);
+        padding: 2.5rem;
+        background: var(--gray);
+        clip-path: polygon(
+          0 0,
+          calc(100% - 30px) 0,
+          100% 30px,
+          100% 100%,
+          30px 100%,
+          0 calc(100% - 30px)
+        );
+      }
+
+      .feature-card:hover {
+        background: var(--honey);
+        color: var(--black);
+        border-color: var(--black);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-card h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      /* HEXAGON PATTERN BACKGROUND */
+      .hexagon-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.03;
+        z-index: -1;
+        pointer-events: none;
+        background-image: repeating-linear-gradient(
+            0deg,
+            var(--honey) 0px,
+            transparent 2px,
+            transparent 60px
+          ),
+          repeating-linear-gradient(
+            60deg,
+            var(--honey) 0px,
+            transparent 2px,
+            transparent 60px
+          ),
+          repeating-linear-gradient(
+            -60deg,
+            var(--honey) 0px,
+            transparent 2px,
+            transparent 60px
+          );
+      }
+
+      /* PRICING SECTION */
+      .pricing {
+        max-width: 1400px;
+        margin: 6rem auto;
+        padding: 0 2rem;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .price-card {
+        border: 4px solid var(--white);
+        padding: 2.5rem;
+        background: var(--black);
+        position: relative;
+      }
+
+      .price-card.featured {
+        background: var(--honey);
+        color: var(--black);
+        border-color: var(--black);
+        transform: scale(1.05);
+        box-shadow: 12px 12px 0 var(--white);
+      }
+
+      .tier-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      .price {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+      }
+
+      .features-list {
+        list-style: none;
+        margin-bottom: 2rem;
+      }
+
+      .features-list li {
+        padding: 0.5rem 0;
+        border-bottom: 2px solid currentColor;
+      }
+
+      .features-list li::before {
+        content: "⬢ ";
+        color: var(--honey);
+      }
+
+      .price-card.featured .features-list li::before {
+        color: var(--black);
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 4px solid var(--white);
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-top: 6rem;
+      }
+
+      footer p {
+        font-family: "JetBrains Mono", monospace;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* MOBILE RESPONSIVE */
+      @media (max-width: 768px) {
+        .nav-links {
+          gap: 1rem;
+        }
+
+        .nav-links a {
+          font-size: 0.7rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .hero-stats {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .cta-group {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+
+        h1 {
+          font-size: 3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hexagon-bg"></div>
+
+    <header>
+      <nav>
+        <div class="logo">STUDYHIVE</div>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#login">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>
+        YOUR NOTES.<br />
+        <span class="highlight">RADICALLY</span><br />
+        UPGRADED.
+      </h1>
+      <p class="hero-subtitle">
+        Stop wasting time with messy notes. StudyHive transforms your class
+        materials into AI-powered, peer-verified study resources. No fluff. No
+        nonsense. Just results.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Notes Uploaded</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">200K+</div>
+          <div class="stat-label">AI Summaries</div>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <a href="#signup" class="btn btn-primary">Start Free</a>
+        <a href="#demo" class="btn btn-secondary">Watch Demo</a>
+      </div>
+    </section>
+
+    <section class="why-section">
+      <div class="container">
+        <h2>Why Not Just Use ChatGPT?</h2>
+        <div class="reasons-grid">
+          <div class="reason-card">
+            <h3>Persistence</h3>
+            <p>
+              ChatGPT forgets your notes. We keep everything organized by class,
+              subject, and semester. All your materials in one place.
+            </p>
+          </div>
+          <div class="reason-card">
+            <h3>Peer Verification</h3>
+            <p>
+              Not just one AI response. Our summaries are rated by dozens of
+              students. Community-verified accuracy you can trust.
+            </p>
+          </div>
+          <div class="reason-card">
+            <h3>Purpose-Built Tools</h3>
+            <p>
+              Auto-generate flashcards, quizzes, and study packets. Not just
+              text responses—actual study materials ready to use.
+            </p>
+          </div>
+          <div class="reason-card">
+            <h3>Collaborative Learning</h3>
+            <p>
+              Share notes, improve summaries together, and build collective
+              knowledge. Study smarter as a community.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <h2>Features That Actually Matter</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>AI Summaries</h3>
+          <p>
+            Upload your messy notes. Get clean, organized summaries in seconds.
+            Powered by advanced AI, verified by real students.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⬢</div>
+          <h3>Peer Ratings</h3>
+          <p>
+            Every summary gets rated. See what works, what doesn't. Community
+            wisdom beats individual guessing.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Mobile First</h3>
+          <p>
+            Study on your phone. Where you actually are. Not chained to a
+            desktop like it's 2005.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Instant Flashcards</h3>
+          <p>
+            Turn any note into flashcards automatically. Study mode activated.
+            No manual card creation.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>Share Everything</h3>
+          <p>
+            Generate shareable links. Help your study group. Build knowledge
+            together. No walls.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Track Progress</h3>
+          <p>
+            See what's working. Notes uploaded, summaries generated, hours
+            saved. Data-driven studying.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <h2>Ridiculously Simple Pricing</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="tier-name">Free</div>
+          <div class="price">$0</div>
+          <ul class="features-list">
+            <li>5 AI summaries/month</li>
+            <li>Browse community notes</li>
+            <li>Rate summaries</li>
+            <li>Basic features</li>
+          </ul>
+          <a href="#signup" class="btn btn-secondary">Get Started</a>
+        </div>
+
+        <div class="price-card featured">
+          <div class="tier-name">Plus</div>
+          <div class="price">$10/mo</div>
+          <ul class="features-list">
+            <li>Unlimited AI summaries</li>
+            <li>Auto-generate flashcards</li>
+            <li>Export to PDF</li>
+            <li>Advanced AI models</li>
+            <li>Share via link</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#signup" class="btn btn-primary">Most Popular</a>
+        </div>
+
+        <div class="price-card">
+          <div class="tier-name">Premium</div>
+          <div class="price">$20/mo</div>
+          <ul class="features-list">
+            <li>Everything in Plus</li>
+            <li>AI quiz generation</li>
+            <li>Advanced analytics</li>
+            <li>Coming soon: AI tutoring</li>
+            <li>Coming soon: Video explanations</li>
+          </ul>
+          <a href="#signup" class="btn btn-secondary">Go Premium</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        © 2025 STUDYHIVE | Built by students, for students | NJIT Capstone
+        Project
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.8rem">
+        Team: Andrew Gardner, Jovan Fernandez, Umar Farooq, Elliot Cecere
+      </p>
+    </footer>
+
+    <script>
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+
+      // Add aggressive hover effect to nav
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("mouseenter", function () {
+          this.style.transform = "translate(-2px, -2px)";
+        });
+        link.addEventListener("mouseleave", function () {
+          this.style.transform = "translate(0, 0)";
+        });
+      });
+    </script>
+  </body>
+</html>

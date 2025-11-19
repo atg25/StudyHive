@@ -1,0 +1,31 @@
+# Environment and config files
+config.php
+.env
+*.local
+
+# Database
+*.sql
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+vendor/
+
+# Uploads (user files)
+uploads/
+*.log
+
+# Temp files
+tmp/
+temp/
