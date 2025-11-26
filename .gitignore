@@ -2,6 +2,7 @@
 config.php
 .env
 *.local
+google-tts-credentials.json
 
 # Database
 *.sql
@@ -25,6 +26,9 @@ vendor/
 # Uploads (user files)
 uploads/
 *.log
+
+# Generated audio files
+audio/
 
 # Temp files
 tmp/
