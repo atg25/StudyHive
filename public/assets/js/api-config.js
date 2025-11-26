@@ -4,6 +4,13 @@
 const API_CONFIG = {
   // Use environment variable if set, otherwise detect from hostname
   getBaseURL() {
+    // GitHub Pages (static hosting) - needs deployed backend
+    if (window.location.hostname.includes("github.io")) {
+      // TODO: Replace with your deployed backend URL (e.g., Render, Railway, etc.)
+      // For now, return null to show demo-only mode
+      return null;
+    }
+    
     // If running in production (deployed), use the current origin
     if (
       window.location.hostname !== "localhost" &&
@@ -19,19 +26,27 @@ const API_CONFIG = {
     return this.getBaseURL();
   },
 
+  get IS_DEMO_MODE() {
+    return this.BASE_URL === null;
+  },
+
   get SUMMARY_ENDPOINT() {
+    if (this.IS_DEMO_MODE) return null;
     return `${this.BASE_URL}/api/generate-summary`;
   },
 
   get PODCAST_ENDPOINT() {
+    if (this.IS_DEMO_MODE) return null;
     return `${this.BASE_URL}/api/generate-podcast`;
   },
 
   get FLASHCARDS_ENDPOINT() {
+    if (this.IS_DEMO_MODE) return null;
     return `${this.BASE_URL}/api/generate-flashcards`;
   },
 
   get HEALTH_ENDPOINT() {
+    if (this.IS_DEMO_MODE) return null;
     return `${this.BASE_URL}/api/health`;
   },
 };

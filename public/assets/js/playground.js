@@ -76,6 +76,12 @@ generateBtn.addEventListener("click", async () => {
     return;
   }
 
+  // Check if backend is available
+  if (API_CONFIG.IS_DEMO_MODE) {
+    showToast("⚠️ Demo mode: Backend server required for AI features. Run 'npm start' locally or deploy the backend.");
+    return;
+  }
+
   // Show loading
   generateBtn.disabled = true;
   loading.classList.add("active");
