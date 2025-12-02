@@ -34,7 +34,21 @@ const CONFIG = {
 };
 
 // Initialize Google Cloud Text-to-Speech client
-const ttsClient = new textToSpeech.TextToSpeechClient();
+let ttsClient;
+// Prefer JSON credentials from env (Vercel friendly)
+if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+  try {
+    const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+    ttsClient = new textToSpeech.TextToSpeechClient({ credentials: creds });
+    console.log("✅ TTS client initialized from env JSON");
+  } catch (e) {
+    console.error("❌ Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:", e.message);
+    ttsClient = new textToSpeech.TextToSpeechClient();
+  }
+} else {
+  // Fallback: use ADC or file path if set
+  ttsClient = new textToSpeech.TextToSpeechClient();
+}
 
 // Create audio directory if it doesn't exist
 const audioDir = path.join(__dirname, "audio");
