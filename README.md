@@ -41,6 +41,7 @@ npm install
 You need two things:
 
 1. A Gemini API key for the AI features
+
    - Go to https://ai.google.dev/gemini-api/docs/api-key
    - Click "Get API Key"
    - Copy the key (it starts with AIza)
@@ -96,11 +97,11 @@ Then open your browser and go to http://localhost:3000/playground.html
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| npm start | Starts the server |
+| Command          | What it does                    |
+| ---------------- | ------------------------------- |
+| npm start        | Starts the server               |
 | npm run validate | Checks if your setup is correct |
-| npm run cleanup | Deletes old audio files |
+| npm run cleanup  | Deletes old audio files         |
 
 ## Project Files
 
@@ -132,6 +133,7 @@ Make sure you have the google-tts-credentials.json file in the right place and t
 ## Team
 
 NJIT IT310 Capstone Group 9:
+
 - Andrew Gardner
 - Jovan Fernandez
 - Umar Farooq
