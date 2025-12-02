@@ -214,22 +214,26 @@ generatePodcastBtn.addEventListener("click", async () => {
 });
 
 // Share Button
-shareBtn.addEventListener("click", () => {
-  const url = `${window.location.origin}/playground.html?subject=${currentSubject}`;
-  navigator.clipboard
-    .writeText(url)
-    .then(() => {
-      showToast("Link copied to clipboard!");
-    })
-    .catch(() => {
-      showToast("Failed to copy link");
-    });
-});
+if (shareBtn) {
+  shareBtn.addEventListener("click", () => {
+    const url = `${window.location.origin}/playground.html?subject=${currentSubject}`;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        showToast("Link copied to clipboard!");
+      })
+      .catch(() => {
+        showToast("Failed to copy link");
+      });
+  });
+}
 
 // Export PDF Button
-exportBtn.addEventListener("click", () => {
-  showToast("Export to PDF - Available in Plus tier ($10/mo)");
-});
+if (exportBtn) {
+  exportBtn.addEventListener("click", () => {
+    showToast("Export to PDF - Available in Plus tier ($10/mo)");
+  });
+}
 
 // Generate Flashcards Button
 if (makeCardsBtn) {
