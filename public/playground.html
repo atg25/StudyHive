@@ -29,11 +29,28 @@
         height: 20px;
         display: inline-block;
         vertical-align: middle;
+        filter: drop-shadow(0 2px 4px rgba(255, 184, 0, 0.3));
+        transition: transform 0.2s ease, filter 0.2s ease;
+      }
+
+      .icon:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 4px 8px rgba(255, 184, 0, 0.5));
       }
 
       .icon-lg {
         width: 32px;
         height: 32px;
+        filter: drop-shadow(0 3px 6px rgba(255, 184, 0, 0.4));
+      }
+
+      .icon-lg:hover {
+        transform: scale(1.15);
+        filter: drop-shadow(0 6px 12px rgba(255, 184, 0, 0.6));
+      }
+
+      .rating-btn:hover .icon {
+        transform: scale(1.2) rotate(5deg);
       }
 
       body {
@@ -73,7 +90,7 @@
       }
 
       .logo::before {
-        content: "O";
+        content: "⬢";
         color: var(--honey);
         margin-right: 0.5rem;
       }
@@ -547,7 +564,7 @@
       }
 
       .feature-list li::before {
-        content: "* ";
+        content: "⬢ ";
         color: var(--honey);
         font-size: 1.2rem;
         margin-right: 0.5rem;
@@ -755,13 +772,13 @@
       </div>
 
       <div class="loading" id="loading">
-        <div class="hexagon-spinner">O</div>
+        <div class="hexagon-spinner">⬢</div>
         <div>Processing...</div>
       </div>
 
       <div class="summary-output" id="summaryOutput">
         <div class="summary-header">
-          <span style="font-size: 2rem; color: var(--honey)">O</span>
+          <span style="font-size: 2rem; color: var(--honey)">⬢</span>
           <h3>AI Summary</h3>
         </div>
 
@@ -769,14 +786,14 @@
 
         <div class="rating-section">
           <button class="rating-btn" id="thumbsUp">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M7 10v12M21 10l-2-6H6l-3 6v5a3 3 0 003 3h12a3 3 0 003-3v-5z"/>
+            <svg class="icon" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
             </svg>
             <span id="helpfulCount">0</span> Helpful
           </button>
           <button class="rating-btn" id="thumbsDown">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M7 14V2M21 14l-2 6H6l-3-6V9a3 3 0 013-3h12a3 3 0 013 3v5z"/>
+            <svg class="icon" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5">
+              <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>
             </svg>
             <span id="notHelpfulCount">0</span> Not Helpful
           </button>
@@ -792,9 +809,10 @@
           style="text-align: center; margin-bottom: 2rem"
         >
           <h3>
-            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
-              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
-              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5" style="vertical-align: middle; margin-right: 8px;">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <path d="M8 7h8M8 11h8M8 15h4" stroke="#0a0a0a" stroke-width="1.5"/>
             </svg>
             AI-Generated Flashcards
           </h3>
@@ -808,7 +826,7 @@
         </div>
 
         <div id="flashcardLoading" class="loading" style="display: none">
-          <div class="hexagon-spinner">O</div>
+          <div class="hexagon-spinner">⬢</div>
           <div>Generating flashcards...</div>
         </div>
 
@@ -823,12 +841,12 @@
                 <div id="cardQuestion">
                   Click "Generate Flashcards" to start
                 </div>
-                <div class="card-corner">*</div>
+                <div class="card-corner">⬢</div>
               </div>
               <div class="flashcard-face flashcard-back">
                 <div class="card-label">ANSWER</div>
                 <div id="cardAnswer"></div>
-                <div class="card-corner">*</div>
+                <div class="card-corner">⬢</div>
               </div>
             </div>
           </div>
@@ -866,9 +884,10 @@
           "
         >
           <h4 style="margin-bottom: 1rem">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <svg class="icon" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5" style="vertical-align: middle; margin-right: 8px;">
               <circle cx="12" cy="12" r="10"/>
-              <path d="M12 16v-4M12 8h.01"/>
+              <line x1="12" y1="16" x2="12" y2="12" stroke="#0a0a0a" stroke-width="2"/>
+              <circle cx="12" cy="8" r="1" fill="#0a0a0a" stroke="none"/>
             </svg>
             How it works:
           </h4>
@@ -895,9 +914,11 @@
       <div class="podcast-container">
         <div class="podcast-header">
           <h3>
-            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
-              <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
-              <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5" style="vertical-align: middle; margin-right: 8px;">
+              <rect x="9" y="2" width="6" height="12" rx="3"/>
+              <path d="M5 10v2a7 7 0 0 0 14 0v-2" fill="none"/>
+              <line x1="12" y1="19" x2="12" y2="23" fill="none"/>
+              <line x1="8" y1="23" x2="16" y2="23" fill="none"/>
             </svg>
             AI-Generated Study Podcast
           </h3>
@@ -976,9 +997,10 @@
           "
         >
           <h4 style="margin-bottom: 1rem">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <svg class="icon" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5" style="vertical-align: middle; margin-right: 8px;">
               <circle cx="12" cy="12" r="10"/>
-              <path d="M12 16v-4M12 8h.01"/>
+              <line x1="12" y1="16" x2="12" y2="12" stroke="#0a0a0a" stroke-width="2"/>
+              <circle cx="12" cy="8" r="1" fill="#0a0a0a" stroke="none"/>
             </svg>
             How it works:
           </h4>

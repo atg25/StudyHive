@@ -29,11 +29,33 @@
         height: 24px;
         display: inline-block;
         vertical-align: middle;
+        filter: drop-shadow(0 2px 4px rgba(255, 184, 0, 0.3));
+        transition: transform 0.2s ease, filter 0.2s ease;
+      }
+
+      .icon:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 4px 8px rgba(255, 184, 0, 0.5));
       }
 
       .icon-lg {
         width: 48px;
         height: 48px;
+        filter: drop-shadow(0 3px 6px rgba(255, 184, 0, 0.4));
+      }
+
+      .icon-lg:hover {
+        transform: scale(1.15) rotate(-5deg);
+        filter: drop-shadow(0 6px 12px rgba(255, 184, 0, 0.6));
+      }
+
+      .feature-icon:hover .icon-lg {
+        animation: bounce 0.5s ease;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
       }
 
       body {
@@ -71,7 +93,7 @@
       }
 
       .logo::before {
-        content: "O";
+        content: "⬢";
         color: var(--honey);
         margin-right: 0.5rem;
       }
@@ -237,7 +259,7 @@
       }
 
       .reason-card::before {
-        content: "O";
+        content: "⬢";
         font-size: 3rem;
         color: var(--honey);
         position: absolute;
@@ -383,7 +405,7 @@
       }
 
       .features-list li::before {
-        content: "* ";
+        content: "⬢ ";
         color: var(--honey);
       }
 
@@ -532,7 +554,7 @@
           </p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">O</div>
+          <div class="feature-icon">⬢</div>
           <h3>Peer Ratings</h3>
           <p>
             Every summary gets rated. See what works, what doesn't. Community
@@ -556,7 +578,12 @@
           </p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🔗</div>
+          <div class="feature-icon">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
           <h3>Share Everything</h3>
           <p>
             Generate shareable links. Help your study group. Build knowledge
@@ -565,11 +592,11 @@
         </div>
         <div class="feature-card">
           <div class="feature-icon">
-            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="var(--honey)" stroke="#0a0a0a" stroke-width="1.5">
               <path d="M3 3v18h18"/>
-              <path d="M18 17V9"/>
-              <path d="M13 17v-6"/>
-              <path d="M8 17v-3"/>
+              <rect x="7" y="10" width="3" height="10" fill="var(--honey)"/>
+              <rect x="13" y="6" width="3" height="14" fill="var(--honey)"/>
+              <rect x="19" y="2" width="3" height="18" fill="var(--honey)"/>
             </svg>
           </div>
           <h3>Track Progress</h3>
