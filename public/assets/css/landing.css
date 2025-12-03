@@ -385,3 +385,39 @@ footer p {
     font-size: 3rem;
   }
 }
+
+/* FOOTER */
+footer {
+  border-top: 4px solid var(--white);
+  padding: 2rem;
+  text-align: center;
+  background: var(--black);
+  margin-top: 4rem;
+}
+
+footer p {
+  font-size: 0.9rem;
+}
+
+#tosBtn:hover {
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* TOS Modal Styling */
+.tos-section {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-left: 3px solid var(--honey);
+  padding-left: 1.5rem;
+  background: rgba(255, 184, 0, 0.05);
+}
+
+.tos-intro {
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+.tos-para {
+  margin: 1rem 0;
+}

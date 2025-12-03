@@ -831,3 +831,40 @@ audio {
     bottom: 1rem;
   }
 }
+
+/* FOOTER */
+footer {
+  border-top: 4px solid var(--white);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 6rem;
+}
+
+footer p {
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#tosBtn:hover {
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+/* TOS Modal Styling */
+.tos-section {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-left: 3px solid #ffb800;
+  padding-left: 1.5rem;
+  background: rgba(255, 184, 0, 0.05);
+}
+
+.tos-intro {
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+.tos-para {
+  margin: 1rem 0;
+}
