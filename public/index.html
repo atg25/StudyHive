@@ -24,6 +24,18 @@
         --gray: #1a1a1a;
       }
 
+      .icon {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .icon-lg {
+        width: 48px;
+        height: 48px;
+      }
+
       body {
         background: var(--black);
         color: var(--white);
@@ -552,7 +564,14 @@
           </p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">📊</div>
+          <div class="feature-icon">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="M18 17V9"/>
+              <path d="M13 17v-6"/>
+              <path d="M8 17v-3"/>
+            </svg>
+          </div>
           <h3>Track Progress</h3>
           <p>
             See what's working. Notes uploaded, summaries generated, hours

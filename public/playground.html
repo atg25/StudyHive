@@ -24,6 +24,18 @@
         --gray: #1a1a1a;
       }
 
+      .icon {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .icon-lg {
+        width: 32px;
+        height: 32px;
+      }
+
       body {
         background: var(--black);
         color: var(--white);
@@ -757,10 +769,16 @@
 
         <div class="rating-section">
           <button class="rating-btn" id="thumbsUp">
-            [+] <span id="helpfulCount">0</span> Helpful
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 10v12M21 10l-2-6H6l-3 6v5a3 3 0 003 3h12a3 3 0 003-3v-5z"/>
+            </svg>
+            <span id="helpfulCount">0</span> Helpful
           </button>
           <button class="rating-btn" id="thumbsDown">
-            [-] <span id="notHelpfulCount">0</span> Not Helpful
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 14V2M21 14l-2 6H6l-3-6V9a3 3 0 013-3h12a3 3 0 013 3v5z"/>
+            </svg>
+            <span id="notHelpfulCount">0</span> Not Helpful
           </button>
         </div>
       </div>
@@ -773,7 +791,13 @@
           class="flashcard-header"
           style="text-align: center; margin-bottom: 2rem"
         >
-          <h3>[CARDS] AI-Generated Flashcards</h3>
+          <h3>
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            </svg>
+            AI-Generated Flashcards
+          </h3>
           <p>Convert your notes into interactive study flashcards</p>
         </div>
 
@@ -841,7 +865,13 @@
             background: var(--gray);
           "
         >
-          <h4 style="margin-bottom: 1rem">[INFO] How it works:</h4>
+          <h4 style="margin-bottom: 1rem">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            How it works:
+          </h4>
           <ul style="list-style: none; padding: 0">
             <li style="margin-bottom: 0.5rem">
               * Enter your notes in the AI Summaries tab
@@ -864,7 +894,13 @@
     <div class="tab-content" id="podcast">
       <div class="podcast-container">
         <div class="podcast-header">
-          <h3>[AUDIO] AI-Generated Study Podcast</h3>
+          <h3>
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+              <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+              <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
+            </svg>
+            AI-Generated Study Podcast
+          </h3>
           <p>Convert your AI summary into a natural-sounding audio podcast</p>
         </div>
 
@@ -873,7 +909,7 @@
             >Select Voice (Highest Quality Studio):</label
           >
           <select id="voiceSelect" class="voice-select">
-            <optgroup label="[BEST] Studio Quality">
+            <optgroup label="Studio Quality (Best)">
               <option value="en-US-Studio-O" selected>
                 Studio O - Conversational, Warm (Female)
               </option>
@@ -881,7 +917,7 @@
                 Studio Q - Clear, Professional (Male)
               </option>
             </optgroup>
-            <optgroup label="[GOOD] Journey Quality">
+            <optgroup label="Journey Quality (Good)">
               <option value="en-US-Journey-F">
                 Journey F - Natural, Expressive (Female)
               </option>
@@ -939,7 +975,13 @@
             background: var(--gray);
           "
         >
-          <h4 style="margin-bottom: 1rem">[INFO] How it works:</h4>
+          <h4 style="margin-bottom: 1rem">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            How it works:
+          </h4>
           <ul style="list-style: none; padding: 0">
             <li style="margin-bottom: 0.5rem">
               * First, generate an AI summary from your notes

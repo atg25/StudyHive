@@ -79,7 +79,7 @@ generateBtn.addEventListener("click", async () => {
   // Check if backend is available
   if (API_CONFIG.IS_DEMO_MODE) {
     showToast(
-      "⚠️ Demo mode: Backend server required for AI features. Run 'npm start' locally or deploy the backend."
+      "WARNING: Demo mode - Backend server required for AI features. Run 'npm start' locally or deploy the backend."
     );
     return;
   }
@@ -168,7 +168,7 @@ function updateVoteCounts() {
 generatePodcastBtn.addEventListener("click", async () => {
   if (!currentSummary || currentSummary.trim() === "") {
     showToast(
-      "⚠️ Please generate an AI summary first! Go to the AI SUMMARIES tab and click 'Generate AI Summary'."
+      "WARNING: Please generate an AI summary first! Go to the AI SUMMARIES tab and click 'Generate AI Summary'."
     );
     return;
   }
