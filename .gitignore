@@ -1,12 +1,6 @@
-# Environment and config files
-config.php
-.env
-*.local
-google-tts-credentials.json
-
-# Database
-*.sql
-*.sqlite
+# OS files
+.DS_Store
+Thumbs.db
 
 # IDE
 .vscode/
@@ -15,21 +9,12 @@ google-tts-credentials.json
 *.swo
 *~
 
-# OS
-.DS_Store
-Thumbs.db
+# Environment variables (if added later)
+.env
+.env.local
 
-# Dependencies
+# Dependencies (if backend is added)
 node_modules/
-vendor/
 
-# Uploads (user files)
-uploads/
+# Logs
 *.log
-
-# Generated audio files
-audio/
-
-# Temp files
-tmp/
-temp/
