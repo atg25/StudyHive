@@ -1,167 +1,91 @@
-// Playground Interactive Logic
+// Variables
+var currentCardIndex = 0;
+var currentFlashcards = [];
+var hasVoted = false;
+var helpfulVotes = 0;
+var notHelpfulVotes = 0;
 
-// State
-let currentSubject = "cs101";
-let currentCardIndex = 0;
-let currentFlashcards = [];
-let hasVoted = false;
-let helpfulVotes = 0;
-let notHelpfulVotes = 0;
+// Get elements
+var notesTextarea = document.getElementById("notes");
+var generateBtn = document.getElementById("generateBtn");
+var loading = document.getElementById("loading");
+var summaryOutput = document.getElementById("summaryOutput");
+var summaryText = document.getElementById("summaryText");
+var thumbsUp = document.getElementById("thumbsUp");
+var thumbsDown = document.getElementById("thumbsDown");
+var helpfulCount = document.getElementById("helpfulCount");
+var notHelpfulCount = document.getElementById("notHelpfulCount");
+var shareBtn = document.getElementById("shareBtn");
+var exportBtn = document.getElementById("exportBtn");
+var makeCardsBtn = document.getElementById("makeCardsBtn");
+var flashcard = document.getElementById("flashcard");
+var cardQuestion = document.getElementById("cardQuestion");
+var cardAnswer = document.getElementById("cardAnswer");
+var cardCounter = document.getElementById("cardCounter");
+var prevCard = document.getElementById("prevCard");
+var nextCard = document.getElementById("nextCard");
+var toast = document.getElementById("toast");
+var generatePodcastBtn = document.getElementById("generatePodcastBtn");
+var podcastPlayer = document.getElementById("podcastPlayer");
+var audioPlayer = document.getElementById("audioPlayer");
+var audioSource = document.getElementById("audioSource");
+var downloadPodcast = document.getElementById("downloadPodcast");
+var tabBtns = document.querySelectorAll(".tab-btn");
+var tabContents = document.querySelectorAll(".tab-content");
 
-// DOM Elements
-const subjectSelect = document.getElementById("subject");
-const notesTextarea = document.getElementById("notes");
-const generateBtn = document.getElementById("generateBtn");
-const loading = document.getElementById("loading");
-const summaryOutput = document.getElementById("summaryOutput");
-const summaryText = document.getElementById("summaryText");
-const thumbsUp = document.getElementById("thumbsUp");
-const thumbsDown = document.getElementById("thumbsDown");
-const helpfulCount = document.getElementById("helpfulCount");
-const notHelpfulCount = document.getElementById("notHelpfulCount");
-const shareBtn = document.getElementById("shareBtn");
-const exportBtn = document.getElementById("exportBtn");
-const makeCardsBtn = document.getElementById("makeCardsBtn");
-const flashcard = document.getElementById("flashcard");
-const cardQuestion = document.getElementById("cardQuestion");
-const cardAnswer = document.getElementById("cardAnswer");
-const cardCounter = document.getElementById("cardCounter");
-const prevCard = document.getElementById("prevCard");
-const nextCard = document.getElementById("nextCard");
-const toast = document.getElementById("toast");
-
-// Podcast elements
-const generatePodcastBtn = document.getElementById("generatePodcastBtn");
-const voiceSelect = document.getElementById("voiceSelect");
-const podcastPlayer = document.getElementById("podcastPlayer");
-const audioPlayer = document.getElementById("audioPlayer");
-const audioSource = document.getElementById("audioSource");
-const downloadPodcast = document.getElementById("downloadPodcast");
-
-// Store current summary for podcast generation
-let currentSummary = "";
-
-// Tab Navigation
-const tabBtns = document.querySelectorAll(".tab-btn");
-const tabContents = document.querySelectorAll(".tab-content");
-
-tabBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const tabName = btn.dataset.tab;
-
-    // Update active states
-    tabBtns.forEach((b) => b.classList.remove("active"));
-    tabContents.forEach((c) => c.classList.remove("active"));
-
-    btn.classList.add("active");
+// Tab switching
+for (var i = 0; i < tabBtns.length; i++) {
+  tabBtns[i].addEventListener("click", function() {
+    var tabName = this.dataset.tab;
+    
+    // Remove active from all
+    for (var j = 0; j < tabBtns.length; j++) {
+      tabBtns[j].classList.remove("active");
+    }
+    for (var k = 0; k < tabContents.length; k++) {
+      tabContents[k].classList.remove("active");
+    }
+    
+    // Add active to clicked tab
+    this.classList.add("active");
     document.getElementById(tabName).classList.add("active");
   });
-});
+}
 
-// Load sample notes on subject change
-subjectSelect.addEventListener("change", (e) => {
-  currentSubject = e.target.value;
-  notesTextarea.value = sampleData[currentSubject].notes;
-  summaryOutput.classList.remove("active");
-  hasVoted = false;
-});
+// Load CS101 notes
+notesTextarea.value = sampleData.cs101.notes;
 
-// Initialize with first subject
-notesTextarea.value = sampleData[currentSubject].notes;
-
-// Input validation constants (match server)
-const MAX_INPUT_LENGTH = 10000;
-const MIN_INPUT_LENGTH = 10;
-
-// Generate Summary
-generateBtn.addEventListener("click", async () => {
-  const notes = notesTextarea.value.trim();
-
-  if (!notes) {
-    showToast("Please enter some notes first!");
-    return;
-  }
-
-  if (notes.length < MIN_INPUT_LENGTH) {
-    showToast(
-      `Notes too short. Please enter at least ${MIN_INPUT_LENGTH} characters.`
-    );
-    return;
-  }
-
-  if (notes.length > MAX_INPUT_LENGTH) {
-    showToast(
-      `Notes too long. Maximum ${MAX_INPUT_LENGTH} characters allowed.`
-    );
-    return;
-  }
-
-  // Check if backend is available
-  if (API_CONFIG.IS_DEMO_MODE) {
-    showToast(
-      "Demo mode: Backend server required for AI features. Run 'npm start' locally or deploy the backend."
-    );
-    return;
-  }
-
-  // Show loading
+// Generate summary button
+generateBtn.addEventListener("click", function() {
   generateBtn.disabled = true;
   loading.classList.add("active");
   summaryOutput.classList.remove("active");
-
-  try {
-    // Call real AI API
-    const response = await fetch(API_CONFIG.SUMMARY_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        notes: notesTextarea.value,
-      }),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to generate summary");
-    }
-
-    const data = await response.json();
-
-    // Hide loading, show summary
+  
+  setTimeout(function() {
     loading.classList.remove("active");
     summaryOutput.classList.add("active");
-
-    // Display summary (convert markdown ** to HTML bold)
-    let formattedSummary = data.summary
-      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\n/g, "<br>");
-
-    summaryText.innerHTML = formattedSummary;
-
-    // Store summary for podcast
-    currentSummary = data.summary;
-
-    // Reset votes (start fresh for each new summary)
+    
+    // Get summary and format it
+    var summary = sampleData.cs101.summary;
+    var formatted = summary.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    formatted = formatted.replace(/\n/g, "<br>");
+    summaryText.innerHTML = formatted;
+    
+    // Reset votes
     hasVoted = false;
     helpfulVotes = 0;
     notHelpfulVotes = 0;
     updateVoteCounts();
     thumbsUp.classList.remove("voted");
     thumbsDown.classList.remove("voted");
-
+    
     showToast("Summary generated successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-    loading.classList.remove("active");
-    showToast(error.message || "Failed to generate summary. Please try again.");
-  } finally {
     generateBtn.disabled = false;
-  }
+  }, 1000);
 });
 
-// Voting System
-thumbsUp.addEventListener("click", () => {
+// Thumbs up button
+thumbsUp.addEventListener("click", function() {
   if (hasVoted) return;
   helpfulVotes++;
   hasVoted = true;
@@ -170,7 +94,8 @@ thumbsUp.addEventListener("click", () => {
   showToast("Thanks for your feedback!");
 });
 
-thumbsDown.addEventListener("click", () => {
+// Thumbs down button
+thumbsDown.addEventListener("click", function() {
   if (hasVoted) return;
   notHelpfulVotes++;
   hasVoted = true;
@@ -179,223 +104,149 @@ thumbsDown.addEventListener("click", () => {
   showToast("Thanks for your feedback!");
 });
 
+// Update vote counts
 function updateVoteCounts() {
   helpfulCount.textContent = helpfulVotes;
   notHelpfulCount.textContent = notHelpfulVotes;
 }
 
-// Generate Podcast
-generatePodcastBtn.addEventListener("click", async () => {
-  if (!currentSummary || currentSummary.trim() === "") {
-    showToast(
-      "Please generate an AI summary first! Go to the AI SUMMARIES tab and click 'Generate AI Summary'."
-    );
-    return;
-  }
-
-  generatePodcastBtn.disabled = true;
-  generatePodcastBtn.textContent = "Generating Podcast...";
-
-  try {
-    const response = await fetch(API_CONFIG.PODCAST_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        summary: currentSummary,
-        voice: voiceSelect.value,
-      }),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to generate podcast");
-    }
-
-    const data = await response.json();
-
-    // Display audio player
-    const audioUrl = `${API_CONFIG.BASE_URL}${data.audioUrl}`;
-    audioSource.src = audioUrl;
-    audioPlayer.load();
-    downloadPodcast.href = audioUrl;
-    downloadPodcast.download = data.audioUrl.split("/").pop();
-    podcastPlayer.style.display = "block";
-
-    showToast("Podcast generated successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-    showToast(error.message || "Failed to generate podcast. Please try again.");
-  } finally {
-    generatePodcastBtn.disabled = false;
-    generatePodcastBtn.textContent = "Generate Podcast";
-  }
-});
-
-// Share Button
-if (shareBtn) {
-  shareBtn.addEventListener("click", () => {
-    const url = `${window.location.origin}/playground.html?subject=${currentSubject}`;
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        showToast("Link copied to clipboard!");
-      })
-      .catch(() => {
-        showToast("Failed to copy link");
-      });
+// Generate podcast button
+if (generatePodcastBtn) {
+  generatePodcastBtn.addEventListener("click", function() {
+    generatePodcastBtn.disabled = true;
+    generatePodcastBtn.textContent = "Generating Podcast...";
+    
+    setTimeout(function() {
+      audioSource.src = "assets/audio/cs101-podcast.mp3";
+      audioPlayer.load();
+      downloadPodcast.href = "assets/audio/cs101-podcast.mp3";
+      downloadPodcast.download = "cs101-binary-search-podcast.mp3";
+      podcastPlayer.style.display = "block";
+      
+      generatePodcastBtn.disabled = false;
+      generatePodcastBtn.textContent = "Generate Podcast";
+      showToast("Podcast generated successfully!");
+    }, 1500);
   });
 }
 
-// Export PDF Button
+// Share button
+if (shareBtn) {
+  shareBtn.addEventListener("click", function() {
+    var url = window.location.origin + "/playground.html";
+    navigator.clipboard.writeText(url).then(function() {
+      showToast("Link copied to clipboard!");
+    }).catch(function() {
+      showToast("Failed to copy link");
+    });
+  });
+}
+
+// Export button
 if (exportBtn) {
-  exportBtn.addEventListener("click", () => {
+  exportBtn.addEventListener("click", function() {
     showToast("Export to PDF - Available in Plus tier ($10/mo)");
   });
 }
 
-// Generate Flashcards Button
+// Make flashcards button
 if (makeCardsBtn) {
-  makeCardsBtn.addEventListener("click", async () => {
-    const notes = document.getElementById("notes").value;
-    const flashcardLoading = document.getElementById("flashcardLoading");
-    const flashcardOutput = document.getElementById("flashcardOutput");
-
-    if (!notes.trim()) {
-      showToast("Please enter notes in the AI Summaries tab first!");
-      return;
-    }
-
-    if (notes.length < MIN_INPUT_LENGTH) {
-      showToast(
-        `Notes too short. Please enter at least ${MIN_INPUT_LENGTH} characters.`
-      );
-      return;
-    }
-
+  makeCardsBtn.addEventListener("click", function() {
+    var flashcardLoading = document.getElementById("flashcardLoading");
+    var flashcardOutput = document.getElementById("flashcardOutput");
+    
     // Switch to flashcards tab
-    tabBtns.forEach((b) => b.classList.remove("active"));
-    tabContents.forEach((c) => c.classList.remove("active"));
+    for (var i = 0; i < tabBtns.length; i++) {
+      tabBtns[i].classList.remove("active");
+    }
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].classList.remove("active");
+    }
     tabBtns[1].classList.add("active");
     document.getElementById("flashcards").classList.add("active");
-
-    // Show loading state and disable button
+    
     makeCardsBtn.disabled = true;
     makeCardsBtn.textContent = "Generating...";
     if (flashcardLoading) flashcardLoading.style.display = "flex";
     if (flashcardOutput) flashcardOutput.style.display = "none";
-
-    try {
-      const response = await fetch(
-        `${API_CONFIG.BASE_URL}/api/generate-flashcards`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ notes }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to generate flashcards");
-      }
-
-      const data = await response.json();
-      currentFlashcards = data.flashcards || [];
+    
+    setTimeout(function() {
+      currentFlashcards = sampleData.cs101.flashcards;
       currentCardIndex = 0;
-
-      if (currentFlashcards.length === 0) {
-        showToast("No flashcards could be generated from these notes");
-        return;
+      
+      if (currentFlashcards.length > 0) {
+        loadFlashcard();
+        if (flashcardOutput) flashcardOutput.style.display = "block";
+        showToast("Generated " + currentFlashcards.length + " flashcards!");
       }
-
-      loadFlashcard();
-      if (flashcardOutput) flashcardOutput.style.display = "block";
-      showToast(`Generated ${currentFlashcards.length} flashcards!`);
-    } catch (error) {
-      showToast("Error generating flashcards. Please try again.");
-    } finally {
+      
       makeCardsBtn.disabled = false;
       makeCardsBtn.textContent = "Generate Flashcards from Notes";
       if (flashcardLoading) flashcardLoading.style.display = "none";
-    }
+    }, 1000);
   });
 }
 
-// Flashcard Logic
+// Load current flashcard
 function loadFlashcard() {
   if (currentFlashcards.length === 0) return;
-
-  const card = currentFlashcards[currentCardIndex];
+  
+  var card = currentFlashcards[currentCardIndex];
   cardQuestion.textContent = card.q;
   cardAnswer.textContent = card.a;
-  cardCounter.textContent = `Card ${currentCardIndex + 1} of ${
-    currentFlashcards.length
-  }`;
-
-  // Reset flip state
+  cardCounter.textContent = "Card " + (currentCardIndex + 1) + " of " + currentFlashcards.length;
+  
   flashcard.classList.remove("flipped");
-
-  // Update button states
-  prevCard.disabled = currentCardIndex === 0;
-  nextCard.disabled = currentCardIndex === currentFlashcards.length - 1;
+  prevCard.disabled = (currentCardIndex === 0);
+  nextCard.disabled = (currentCardIndex === currentFlashcards.length - 1);
 }
 
-// Flip flashcard on click
-flashcard.addEventListener("click", () => {
+// Flip flashcard
+flashcard.addEventListener("click", function() {
   flashcard.classList.toggle("flipped");
 });
 
-// Navigation buttons
-prevCard.addEventListener("click", () => {
+// Previous card button
+prevCard.addEventListener("click", function() {
   if (currentCardIndex > 0) {
     currentCardIndex--;
     loadFlashcard();
   }
 });
 
-nextCard.addEventListener("click", () => {
+// Next card button
+nextCard.addEventListener("click", function() {
   if (currentCardIndex < currentFlashcards.length - 1) {
     currentCardIndex++;
     loadFlashcard();
   }
 });
 
-// Keyboard navigation
-document.addEventListener("keydown", (e) => {
-  // Only work if flashcards tab is active
-  if (!document.getElementById("flashcards").classList.contains("active"))
-    return;
-
-  if (e.key === "ArrowLeft" && !prevCard.disabled) {
+// Keyboard controls for flashcards
+document.addEventListener("keydown", function(event) {
+  var flashcardsTab = document.getElementById("flashcards");
+  if (!flashcardsTab.classList.contains("active")) return;
+  
+  if (event.key === "ArrowLeft" && !prevCard.disabled) {
     currentCardIndex--;
     loadFlashcard();
-  } else if (e.key === "ArrowRight" && !nextCard.disabled) {
+  } else if (event.key === "ArrowRight" && !nextCard.disabled) {
     currentCardIndex++;
     loadFlashcard();
-  } else if (e.key === " ") {
-    e.preventDefault();
+  } else if (event.key === " ") {
+    event.preventDefault();
     flashcard.classList.toggle("flipped");
   }
 });
 
-// Toast Notification
+// Show toast message
 function showToast(message) {
   toast.textContent = message;
   toast.classList.add("show");
-  setTimeout(() => {
+  setTimeout(function() {
     toast.classList.remove("show");
   }, 3000);
 }
 
 // Initialize vote counts
 updateVoteCounts();
-
-// Check for URL parameters (for sharing)
-const urlParams = new URLSearchParams(window.location.search);
-const sharedSubject = urlParams.get("subject");
-if (sharedSubject && sampleData[sharedSubject]) {
-  subjectSelect.value = sharedSubject;
-  currentSubject = sharedSubject;
-  notesTextarea.value = sampleData[currentSubject].notes;
-}

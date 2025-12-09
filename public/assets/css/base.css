@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --honey: #ffb800;
+  --gray: #1a1a1a;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  border-bottom: 4px solid var(--white);
+  padding: 2rem;
+  position: sticky;
+  top: 0;
+  background: var(--black);
+  z-index: 1000;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border: 3px solid transparent;
+  padding: 0.5rem 1rem;
+}
+.nav-links a:hover {
+  border: 3px solid var(--honey);
+}
+
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.btn {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 4px solid var(--white);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: var(--honey);
+  color: var(--black);
+}
+.btn-secondary {
+  background: var(--black);
+  color: var(--white);
+}
+
+footer {
+  border-top: 4px solid var(--white);
+  padding: 2rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.tos-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  overflow-y: auto;
+}
+
+.tos-content {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: var(--black);
+  border: 6px solid var(--white);
+  padding: 3rem;
+}
+
+.tos-section {
+  margin-bottom: 2rem;
+}
+.tos-section h2 {
+  color: var(--honey);
+  margin-bottom: 1rem;
+}
