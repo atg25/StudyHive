@@ -98,10 +98,10 @@ h1 .highlight {
 .reason-card::before {
   content: url("../icons/hexagon.svg");
   position: absolute;
-  top: -0.5rem;
-  left: -0.5rem;
-  width: 16px;
-  height: 16px;
+  top: -1rem;
+  left: -1rem;
+  width: 32px;
+  height: 32px;
 }
 .reason-card h3 {
   font-family: "Space Grotesk", sans-serif;
@@ -196,10 +196,14 @@ h1 .highlight {
 .features-list li::before {
   content: url("../icons/hexagon.svg");
   display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 8px;
-  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  vertical-align: text-top;
+}
+
+.price-card.featured .features-list li::before {
+  filter: brightness(0);
 }
 
 @media (max-width: 768px) {
