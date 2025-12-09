@@ -21,18 +21,21 @@ git clone https://github.com/atg25/StudyHive.git
 cd StudyHive
 ```
 
-2. **Run locally**
+2. **Run locally** (site root is `index.html` at the repo root)
 
 ```bash
-cd public
 python3 -m http.server 8000
 ```
 
 3. **Open in browser**
 
-```
+```text
 http://localhost:8000
 ```
+
+## GitHub Pages
+
+The published site now lives at the repository root (`index.html` on the `main` branch), so GitHub Pages should be pointed at the default root source rather than `public/`.
 
 ## Demo Accounts
 
