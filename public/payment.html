@@ -14,6 +14,77 @@
     />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/landing.css" />
+    <style>
+      .payment-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .payment-box {
+        border: 4px solid var(--white);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .payment-box h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      .payment-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        background: var(--gray);
+        margin-bottom: 1rem;
+      }
+
+      .payment-row span:last-child {
+        color: var(--honey);
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gray);
+        border: 2px solid var(--white);
+        color: var(--white);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      .hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -40,220 +111,47 @@
       </nav>
     </header>
 
-    <section
-      class="hero"
-      style="
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <div style="max-width: 600px; width: 100%; padding: 2rem">
+    <section class="hero">
+      <div class="payment-container">
         <h1 style="font-size: 3rem; margin-bottom: 2rem">COMPLETE PAYMENT</h1>
 
-        <div
-          style="
-            border: 4px solid var(--white);
-            padding: 2rem;
-            margin-bottom: 2rem;
-          "
-        >
-          <h2
-            style="
-              font-family: 'Space Grotesk', sans-serif;
-              font-size: 1.5rem;
-              margin-bottom: 1rem;
-              text-transform: uppercase;
-            "
-          >
-            Order Summary
-          </h2>
-
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              padding: 1rem;
-              background: var(--gray);
-              margin-bottom: 1rem;
-            "
-          >
-            <span style="font-weight: 600">Plan:</span>
-            <span id="planName" style="color: var(--honey)">-</span>
+        <div class="payment-box">
+          <h2>Order Summary</h2>
+          <div class="payment-row">
+            <span>Plan:</span>
+            <span id="planName">Plus</span>
           </div>
-
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              padding: 1rem;
-              background: var(--gray);
-              margin-bottom: 1rem;
-            "
-          >
-            <span style="font-weight: 600">Price:</span>
-            <span id="planPrice" style="color: var(--honey)">-</span>
+          <div class="payment-row">
+            <span>Price:</span>
+            <span id="planPrice">$9.99/month</span>
           </div>
-
-          <div
-            style="
-              border-top: 2px solid var(--white);
-              padding-top: 1rem;
-              margin-top: 1rem;
-            "
-          >
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                font-size: 1.2rem;
-                font-weight: 600;
-              "
-            >
-              <span>Total:</span>
-              <span id="totalPrice" style="color: var(--honey)">-</span>
-            </div>
+          <div class="payment-row">
+            <span style="font-weight: 700">Total:</span>
+            <span id="totalPrice" style="font-weight: 700">$9.99/month</span>
           </div>
         </div>
 
-        <!-- PayPal-style payment form -->
-        <div
-          style="
-            border: 4px solid var(--white);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-          "
-        >
-          <h3
-            style="
-              font-family: 'Space Grotesk', sans-serif;
-              font-size: 1.3rem;
-              margin-bottom: 2rem;
-              text-transform: uppercase;
-              text-align: center;
-            "
-          >
-            Payment Information
-          </h3>
-
-          <form
-            id="paymentForm"
-            style="display: flex; flex-direction: column; gap: 1.5rem"
-          >
-            <div>
-              <label
-                style="
-                  display: block;
-                  margin-bottom: 0.5rem;
-                  font-weight: 600;
-                  font-size: 0.9rem;
-                "
-                >EMAIL</label
-              >
-              <input
-                type="email"
-                id="email"
-                required
-                placeholder="your@email.com"
-                style="
-                  width: 100%;
-                  padding: 1rem;
-                  background: var(--gray);
-                  border: 2px solid var(--white);
-                  color: var(--white);
-                  font-family: 'Inter', sans-serif;
-                  font-size: 1rem;
-                "
-              />
-            </div>
-
-            <div>
-              <label
-                style="
-                  display: block;
-                  margin-bottom: 0.5rem;
-                  font-weight: 600;
-                  font-size: 0.9rem;
-                "
-                >CARD NUMBER</label
-              >
+        <div class="payment-box">
+          <h2>Payment Information</h2>
+          <form id="paymentForm">
+            <div class="form-group">
+              <label>Card Number</label>
               <input
                 type="text"
                 id="cardNumber"
-                required
                 placeholder="1234 5678 9012 3456"
-                maxlength="19"
-                style="
-                  width: 100%;
-                  padding: 1rem;
-                  background: var(--gray);
-                  border: 2px solid var(--white);
-                  color: var(--white);
-                  font-family: 'JetBrains Mono', monospace;
-                  font-size: 1rem;
-                  letter-spacing: 2px;
-                "
+                required
               />
             </div>
 
-            <div
-              style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"
-            >
-              <div>
-                <label
-                  style="
-                    display: block;
-                    margin-bottom: 0.5rem;
-                    font-weight: 600;
-                    font-size: 0.9rem;
-                  "
-                  >EXPIRY</label
-                >
-                <input
-                  type="text"
-                  id="expiry"
-                  required
-                  placeholder="MM/YY"
-                  maxlength="5"
-                  style="
-                    width: 100%;
-                    padding: 1rem;
-                    background: var(--gray);
-                    border: 2px solid var(--white);
-                    color: var(--white);
-                    font-family: 'JetBrains Mono', monospace;
-                    font-size: 1rem;
-                  "
-                />
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="text" id="expiry" placeholder="MM/YY" required />
               </div>
-
-              <div>
-                <label
-                  style="
-                    display: block;
-                    margin-bottom: 0.5rem;
-                    font-weight: 600;
-                    font-size: 0.9rem;
-                  "
-                  >CVV</label
-                >
-                <input
-                  type="text"
-                  id="cvv"
-                  required
-                  placeholder="123"
-                  maxlength="3"
-                  style="
-                    width: 100%;
-                    padding: 1rem;
-                    background: var(--gray);
-                    border: 2px solid var(--white);
-                    color: var(--white);
-                    font-family: 'JetBrains Mono', monospace;
-                    font-size: 1rem;
-                  "
-                />
+              <div class="form-group">
+                <label>CVV</label>
+                <input type="text" id="cvv" placeholder="123" required />
               </div>
             </div>
 
@@ -272,14 +170,7 @@
           </form>
         </div>
 
-        <p
-          style="
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.85rem;
-            opacity: 0.6;
-          "
-        >
+        <p style="text-align: center; font-size: 0.85rem; opacity: 0.6">
           Secure payment powered by PayPal
         </p>
       </div>
@@ -287,66 +178,37 @@
 
     <script src="assets/js/auth.js"></script>
     <script>
-      // Get payment info from URL or localStorage
-      const urlParams = new URLSearchParams(window.location.search);
-      const plan = urlParams.get("plan") || "plus";
+      var urlParams = new URLSearchParams(window.location.search);
+      var plan = urlParams.get("plan") || "plus";
 
-      const planDetails = {
-        plus: { name: "Plus", price: "9.99" },
-        premium: { name: "Premium", price: "19.99" },
+      var planDetails = {
+        plus: { name: "Plus", price: "$9.99/month" },
+        premium: { name: "Premium", price: "$19.99/month" },
       };
 
-      const currentPlan = planDetails[plan];
+      var currentPlan = planDetails[plan];
       document.getElementById("planName").textContent = currentPlan.name;
-      document.getElementById(
-        "planPrice"
-      ).textContent = `$${currentPlan.price}/month`;
-      document.getElementById(
-        "totalPrice"
-      ).textContent = `$${currentPlan.price}/month`;
+      document.getElementById("planPrice").textContent = currentPlan.price;
+      document.getElementById("totalPrice").textContent = currentPlan.price;
 
-      // Format card number input
-      document.getElementById("cardNumber").addEventListener("input", (e) => {
-        let value = e.target.value.replace(/\s/g, "");
-        let formattedValue = value.match(/.{1,4}/g)?.join(" ") || value;
-        e.target.value = formattedValue;
-      });
-
-      // Format expiry input
-      document.getElementById("expiry").addEventListener("input", (e) => {
-        let value = e.target.value.replace(/\D/g, "");
-        if (value.length >= 2) {
-          value = value.slice(0, 2) + "/" + value.slice(2, 4);
-        }
-        e.target.value = value;
-      });
-
-      // Handle payment form submission
-      document.getElementById("paymentForm").addEventListener("submit", (e) => {
+      var form = document.getElementById("paymentForm");
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        // Simulate payment processing
-        const btn = e.target.querySelector("button");
-        btn.textContent = "PROCESSING...";
-        btn.disabled = true;
+        var user = getCurrentUser();
+        if (user) {
+          user.plan = plan;
+          localStorage.setItem("currentUser", JSON.stringify(user));
 
-        setTimeout(() => {
-          // Update user plan
-          const user = getCurrentUser();
-          if (user) {
-            user.plan = plan;
-            localStorage.setItem("currentUser", JSON.stringify(user));
-
-            const users = JSON.parse(localStorage.getItem("users") || "{}");
-            if (users[user.username]) {
-              users[user.username].plan = plan;
-              localStorage.setItem("users", JSON.stringify(users));
-            }
+          var users = JSON.parse(localStorage.getItem("users") || "{}");
+          if (users[user.username]) {
+            users[user.username].plan = plan;
+            localStorage.setItem("users", JSON.stringify(users));
           }
+        }
 
-          alert("Payment successful! Welcome to StudyHive " + currentPlan.name);
-          window.location.href = "account.html";
-        }, 1500);
+        alert("Payment successful! Welcome to StudyHive " + currentPlan.name);
+        window.location.href = "account.html";
       });
     </script>
   </body>

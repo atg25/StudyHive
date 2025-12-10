@@ -14,6 +14,76 @@
     />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/landing.css" />
+    <style>
+      .signin-hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .signin-container {
+        max-width: 500px;
+        width: 100%;
+        padding: 2rem;
+      }
+
+      .signin-container h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .signin-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gray);
+        border: 2px solid var(--white);
+        color: var(--white);
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+      }
+
+      .error-msg {
+        color: var(--honey);
+        display: none;
+        padding: 1rem;
+        border: 2px solid var(--honey);
+        background: rgba(255, 184, 0, 0.1);
+      }
+
+      .signin-button {
+        width: 100%;
+        padding: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .signin-link {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .signin-link a {
+        color: var(--honey);
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -40,108 +110,46 @@
       </nav>
     </header>
 
-    <section
-      class="hero"
-      style="
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <div style="max-width: 500px; width: 100%; padding: 2rem">
-        <h1 style="font-size: 3rem; margin-bottom: 2rem">SIGN IN</h1>
+    <section class="hero signin-hero">
+      <div class="signin-container">
+        <h1>SIGN IN</h1>
 
-        <form
-          id="signinForm"
-          style="display: flex; flex-direction: column; gap: 1.5rem"
-        >
-          <div>
-            <label
-              for="username"
-              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
-              >Username</label
-            >
-            <input
-              type="text"
-              id="username"
-              name="username"
-              required
-              style="
-                width: 100%;
-                padding: 1rem;
-                background: var(--gray);
-                border: 2px solid var(--white);
-                color: var(--white);
-                font-family: 'Inter', sans-serif;
-                font-size: 1rem;
-              "
-            />
+        <form id="signinForm" class="signin-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
           </div>
 
-          <div>
-            <label
-              for="password"
-              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-              style="
-                width: 100%;
-                padding: 1rem;
-                background: var(--gray);
-                border: 2px solid var(--white);
-                color: var(--white);
-                font-family: 'Inter', sans-serif;
-                font-size: 1rem;
-              "
-            />
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
           </div>
 
-          <div
-            id="errorMsg"
-            style="
-              color: var(--honey);
-              display: none;
-              padding: 1rem;
-              border: 2px solid var(--honey);
-              background: rgba(255, 184, 0, 0.1);
-            "
-          ></div>
+          <div id="errorMsg" class="error-msg"></div>
 
-          <button
-            type="submit"
-            class="btn"
-            style="width: 100%; padding: 1.5rem; font-size: 1.1rem"
-          >
-            SIGN IN
-          </button>
+          <button type="submit" class="btn signin-button">SIGN IN</button>
         </form>
 
-        <p style="margin-top: 2rem; text-align: center">
+        <p class="signin-link">
           Don't have an account?
-          <a
-            href="signup.html"
-            style="color: var(--honey); text-decoration: underline"
-            >Sign Up</a
-          >
+          <a href="signup.html">Sign Up</a>
         </p>
       </div>
     </section>
 
     <script src="assets/js/auth.js"></script>
     <script>
-      document.getElementById("signinForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const errorMsg = document.getElementById("errorMsg");
+      var signinForm = document.getElementById("signinForm");
+      var errorMsg = document.getElementById("errorMsg");
 
-        const result = signin(username, password);
+      // Handle form submission
+      signinForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        var result = signin(username, password);
 
         if (result.success) {
           window.location.href = "account.html";

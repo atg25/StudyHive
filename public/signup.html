@@ -14,6 +14,77 @@
     />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/landing.css" />
+    <style>
+      .signup-hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .signup-container {
+        max-width: 500px;
+        width: 100%;
+        padding: 2rem;
+      }
+
+      .signup-container h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .signup-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gray);
+        border: 2px solid var(--white);
+        color: var(--white);
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+      }
+
+      .error-msg {
+        color: var(--honey);
+        display: none;
+        padding: 1rem;
+        border: 2px solid var(--honey);
+        background: rgba(255, 184, 0, 0.1);
+      }
+
+      .signup-button {
+        width: 100%;
+        padding: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .signup-link {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .signup-link a {
+        color: var(--honey);
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -40,146 +111,70 @@
       </nav>
     </header>
 
-    <section
-      class="hero"
-      style="
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <div style="max-width: 500px; width: 100%; padding: 2rem">
-        <h1 style="font-size: 3rem; margin-bottom: 2rem">SIGN UP</h1>
+    <section class="hero signup-hero">
+      <div class="signup-container">
+        <h1>SIGN UP</h1>
 
-        <form
-          id="signupForm"
-          style="display: flex; flex-direction: column; gap: 1.5rem"
-        >
-          <div>
-            <label
-              for="username"
-              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
-              >Username</label
-            >
-            <input
-              type="text"
-              id="username"
-              name="username"
-              required
-              style="
-                width: 100%;
-                padding: 1rem;
-                background: var(--gray);
-                border: 2px solid var(--white);
-                color: var(--white);
-                font-family: 'Inter', sans-serif;
-                font-size: 1rem;
-              "
-            />
+        <form id="signupForm" class="signup-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
           </div>
 
-          <div>
-            <label
-              for="password"
-              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-              style="
-                width: 100%;
-                padding: 1rem;
-                background: var(--gray);
-                border: 2px solid var(--white);
-                color: var(--white);
-                font-family: 'Inter', sans-serif;
-                font-size: 1rem;
-              "
-            />
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
           </div>
 
-          <div>
-            <label
-              for="plan"
-              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
-              >Plan</label
-            >
-            <select
-              id="plan"
-              name="plan"
-              style="
-                width: 100%;
-                padding: 1rem;
-                background: var(--gray);
-                border: 2px solid var(--white);
-                color: var(--white);
-                font-family: 'Inter', sans-serif;
-                font-size: 1rem;
-              "
-            >
+          <div class="form-group">
+            <label for="plan">Plan</label>
+            <select id="plan" name="plan">
               <option value="free">Free - $0/month</option>
               <option value="plus">Plus - $9.99/month</option>
               <option value="premium">Premium - $19.99/month</option>
             </select>
           </div>
 
-          <div
-            id="errorMsg"
-            style="
-              color: var(--honey);
-              display: none;
-              padding: 1rem;
-              border: 2px solid var(--honey);
-              background: rgba(255, 184, 0, 0.1);
-            "
-          ></div>
+          <div id="errorMsg" class="error-msg"></div>
 
-          <button
-            type="submit"
-            class="btn"
-            style="width: 100%; padding: 1.5rem; font-size: 1.1rem"
-          >
+          <button type="submit" class="btn signup-button">
             CREATE ACCOUNT
           </button>
         </form>
 
-        <p style="margin-top: 2rem; text-align: center">
+        <p class="signup-link">
           Already have an account?
-          <a
-            href="signin.html"
-            style="color: var(--honey); text-decoration: underline"
-            >Sign In</a
-          >
+          <a href="signin.html">Sign In</a>
         </p>
       </div>
     </section>
 
     <script src="assets/js/auth.js"></script>
     <script>
-      // Pre-select plan from URL parameter
-      const urlParams = new URLSearchParams(window.location.search);
-      const planParam = urlParams.get("plan");
+      var signupForm = document.getElementById("signupForm");
+      var errorMsg = document.getElementById("errorMsg");
+
+      // Get plan from URL if it exists
+      var urlParams = new URLSearchParams(window.location.search);
+      var planParam = urlParams.get("plan");
       if (planParam) {
         document.getElementById("plan").value = planParam;
       }
 
-      document.getElementById("signupForm").addEventListener("submit", (e) => {
+      // Handle form submission
+      signupForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const plan = document.getElementById("plan").value;
-        const errorMsg = document.getElementById("errorMsg");
 
-        const result = signup(username, password, plan);
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var plan = document.getElementById("plan").value;
+
+        var result = signup(username, password, plan);
 
         if (result.success) {
-          // Redirect to payment page for paid plans
+          // Redirect to payment for paid plans, account for free
           if (plan === "plus" || plan === "premium") {
-            window.location.href = `payment.html?plan=${plan}`;
+            window.location.href = "payment.html?plan=" + plan;
           } else {
             window.location.href = "account.html";
           }

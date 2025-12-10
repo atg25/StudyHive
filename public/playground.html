@@ -17,6 +17,132 @@
     />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/playground.css" />
+    <style>
+      /* Paywall Modal */
+      .paywall-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .paywall-content {
+        background: var(--black);
+        color: var(--white);
+        max-width: 500px;
+        padding: 2.5rem;
+        border: 4px solid var(--honey);
+        text-align: center;
+      }
+
+      .paywall-content h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        color: var(--honey);
+      }
+
+      .paywall-content p {
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .paywall-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .paywall-button {
+        padding: 1rem 2rem;
+      }
+
+      /* Terms of Service Modal */
+      .tos-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        overflow-y: auto;
+      }
+
+      .tos-content-box {
+        background: #0a0a0a;
+        color: #ffffff;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: 4px solid #ffffff;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .tos-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        border-bottom: 3px solid #ffffff;
+        padding-bottom: 1rem;
+      }
+
+      .tos-header h2 {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        text-transform: uppercase;
+      }
+
+      .tos-close-btn {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #tosContent {
+        font-family: "Inter", sans-serif;
+        line-height: 1.8;
+        font-size: 0.95rem;
+      }
+
+      /* Footer button styling */
+      .tos-button {
+        background: none;
+        border: none;
+        color: #ffb800;
+        cursor: pointer;
+        text-decoration: underline;
+        font-size: 0.8rem;
+      }
+
+      .download-link {
+        display: inline-block;
+        text-decoration: none;
+      }
+
+      .hexagon-icon {
+        width: 24px;
+        height: 24px;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -80,29 +206,13 @@
 
         <div class="loading" id="loading">
           <div class="hexagon-spinner">
-            <img
-              src="assets/icons/hexagon.svg"
-              alt=""
-              style="width: 24px; height: 24px"
-            />
+            <img src="assets/icons/hexagon.svg" alt="" class="hexagon-icon" />
           </div>
           <div>Processing...</div>
         </div>
 
         <div class="summary-output" id="summaryOutput">
           <div class="summary-text" id="summaryText"></div>
-
-          <div class="rating-section">
-            <button class="rating-btn" id="thumbsUp">
-              <span id="helpfulCount">0</span> Helpful
-            </button>
-            <button class="rating-btn" id="thumbsDown">
-              <span id="notHelpfulCount">0</span> Not Helpful
-            </button>
-            <button class="rating-btn" id="share">
-              <span id="shareCount">0</span> Share
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -117,69 +227,39 @@
         </div>
 
         <div class="flashcard-controls">
-          <button class="btn btn-primary" id="makeCardsBtn">
-            Generate Flashcards from Notes
+          <button
+            class="btn btn-primary"
+            id="generateFlashcardsBtn"
+            onclick="generateFlashcards()"
+          >
+            Generate Flashcards
           </button>
         </div>
 
-        <div id="flashcardLoading" class="loading">
+        <div class="loading" id="flashcardLoading">
           <div class="hexagon-spinner">
-            <img
-              src="assets/icons/hexagon.svg"
-              alt=""
-              style="width: 24px; height: 24px"
-            />
+            <img src="assets/icons/hexagon.svg" alt="" class="hexagon-icon" />
           </div>
           <div>Generating flashcards...</div>
         </div>
 
-        <div id="flashcardOutput" class="flashcard-output">
-          <div class="flashcard-wrapper flashcard-wrapper-inner">
-            <div class="flashcard" id="flashcard">
-              <div class="flashcard-face flashcard-front">
-                <div class="card-label">QUESTION</div>
-                <div id="cardQuestion">
-                  Click "Generate Flashcards" to start
-                </div>
-                <div class="card-corner">
-                  <img
-                    src="assets/icons/hexagon.svg"
-                    alt=""
-                    style="width: 12px; height: 12px"
-                  />
-                </div>
-              </div>
-              <div class="flashcard-face flashcard-back">
-                <div class="card-label">ANSWER</div>
-                <div id="cardAnswer"></div>
-                <div class="card-corner">
-                  <img
-                    src="assets/icons/hexagon.svg"
-                    alt=""
-                    style="width: 12px; height: 12px"
-                  />
-                </div>
-              </div>
+        <div id="flashcardDisplay" style="display: none">
+          <div class="simple-flashcard" id="simpleCard" onclick="flipCard()">
+            <div id="cardContent">
+              <h2 id="cardTitle">QUESTION</h2>
+              <p id="cardText">What is binary search?</p>
             </div>
           </div>
 
           <div class="flashcard-nav">
-            <button class="card-nav-btn" id="prevCard">← Previous</button>
-            <span id="cardCounter" class="card-counter">1 / 5</span>
-            <button class="card-nav-btn" id="nextCard">Next →</button>
+            <button class="card-nav-btn" onclick="prevCard()">
+              ← Previous
+            </button>
+            <span id="cardCount">Card 1 of 4</span>
+            <button class="card-nav-btn" onclick="nextCard()">Next →</button>
           </div>
 
           <p class="card-hint">Click the card to flip it!</p>
-        </div>
-
-        <div class="flashcard-info">
-          <h4>How it works:</h4>
-          <ol>
-            <li>1) Enter your notes in the AI Summaries tab</li>
-            <li>2) Click "Generate Flashcards" to create Q&A pairs</li>
-            <li>3) Click cards to flip between question and answer</li>
-            <li>4) Use arrows to navigate through your deck</li>
-          </ol>
         </div>
       </div>
     </div>
@@ -209,8 +289,7 @@
             href="#"
             id="downloadPodcast"
             download
-            class="btn btn-primary"
-            style="display: inline-block; text-decoration: none"
+            class="btn btn-primary download-link"
           >
             Download MP3
           </a>
@@ -231,54 +310,15 @@
     <div class="toast" id="toast"></div>
 
     <!-- Paywall Modal -->
-    <div
-      id="paywallModal"
-      style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 2000;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <div
-        style="
-          background: var(--black);
-          color: var(--white);
-          max-width: 500px;
-          padding: 2.5rem;
-          border: 4px solid var(--honey);
-          text-align: center;
-        "
-      >
-        <h2
-          style="
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            color: var(--honey);
-          "
-        >
-          Premium Feature
-        </h2>
-        <p style="margin-bottom: 2rem; font-size: 1.1rem">
-          Customize notes and topics with a Plus or Premium account
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center">
-          <button id="upgradeBtn" class="btn" style="padding: 1rem 2rem">
+    <div id="paywallModal" class="paywall-modal">
+      <div class="paywall-content">
+        <h2>Premium Feature</h2>
+        <p>Customize notes and topics with a Plus or Premium account</p>
+        <div class="paywall-buttons">
+          <button id="upgradeBtn" class="btn paywall-button">
             Upgrade Now
           </button>
-          <button
-            id="closePaywallBtn"
-            class="btn btn-secondary"
-            style="padding: 1rem 2rem"
-          >
+          <button id="closePaywallBtn" class="btn btn-secondary paywall-button">
             Close
           </button>
         </div>
@@ -294,95 +334,18 @@
         Team: Andrew Gardner, Jovan Fernandez, Umar Farooq, Elliot Cecere
       </p>
       <p style="margin-top: 1rem">
-        <button
-          id="tosBtn"
-          style="
-            background: none;
-            border: none;
-            color: #ffb800;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 0.8rem;
-          "
-        >
-          Terms of Service
-        </button>
+        <button id="tosBtn" class="tos-button">Terms of Service</button>
       </p>
     </footer>
 
     <!-- Terms of Service Modal -->
-    <div
-      id="tosModal"
-      style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 2000;
-        overflow-y: auto;
-      "
-    >
-      <div
-        style="
-          background: #0a0a0a;
-          color: #ffffff;
-          max-width: 900px;
-          margin: 2rem auto;
-          padding: 2rem;
-          border: 4px solid #ffffff;
-          max-height: 80vh;
-          overflow-y: auto;
-        "
-      >
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            border-bottom: 3px solid #ffffff;
-            padding-bottom: 1rem;
-          "
-        >
-          <h2
-            style="
-              margin: 0;
-              font-family: 'Space Grotesk', sans-serif;
-              text-transform: uppercase;
-            "
-          >
-            Terms of Service
-          </h2>
-          <button
-            id="closeTosBtn"
-            style="
-              background: none;
-              border: none;
-              color: #ffffff;
-              font-size: 2rem;
-              cursor: pointer;
-              padding: 0;
-              width: 2rem;
-              height: 2rem;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-          >
-            ×
-          </button>
+    <div id="tosModal" class="tos-modal">
+      <div class="tos-content-box">
+        <div class="tos-header">
+          <h2>Terms of Service</h2>
+          <button id="closeTosBtn" class="tos-close-btn">×</button>
         </div>
-        <div
-          id="tosContent"
-          style="
-            font-family: 'Inter', sans-serif;
-            line-height: 1.8;
-            font-size: 0.95rem;
-          "
-        ></div>
+        <div id="tosContent"></div>
       </div>
     </div>
 
@@ -391,12 +354,13 @@
     <script src="assets/js/tos-modal.js"></script>
     <script src="assets/js/auth.js"></script>
     <script>
-      const paywallModal = document.getElementById("paywallModal");
-      const closePaywallBtn = document.getElementById("closePaywallBtn");
-      const upgradeBtn = document.getElementById("upgradeBtn");
+      var paywallModal = document.getElementById("paywallModal");
+      var closePaywallBtn = document.getElementById("closePaywallBtn");
+      var upgradeBtn = document.getElementById("upgradeBtn");
+      var notesField = document.getElementById("notes");
 
       function checkPaywall() {
-        const user = getCurrentUser();
+        var user = getCurrentUser();
         return user && (user.plan === "plus" || user.plan === "premium");
       }
 
@@ -404,38 +368,139 @@
         paywallModal.style.display = "flex";
       }
 
-      const notesField = document.getElementById("notes");
-
+      // Remove readonly if user has paid plan
       if (checkPaywall()) {
         notesField.removeAttribute("readonly");
       }
 
-      closePaywallBtn.addEventListener("click", () => {
+      // Close paywall
+      closePaywallBtn.addEventListener("click", function () {
         paywallModal.style.display = "none";
       });
 
-      upgradeBtn.addEventListener("click", () => {
+      // Upgrade button
+      upgradeBtn.addEventListener("click", function () {
         window.location.href = "signup.html?plan=plus";
       });
 
-      notesField.addEventListener("focus", () => {
+      // Show paywall when user tries to edit notes
+      notesField.addEventListener("focus", function () {
         if (!checkPaywall()) {
           notesField.blur();
           showPaywall();
         }
       });
 
-      document.getElementById("accountLink").addEventListener("click", (e) => {
-        e.preventDefault();
-        if (isLoggedIn()) {
-          window.location.href = "account.html";
+      // Account link - navigate based on login status
+      document
+        .getElementById("accountLink")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          if (isLoggedIn()) {
+            window.location.href = "account.html";
+          } else {
+            window.location.href = "signin.html";
+          }
+        });
+
+      // Simple flashcard logic
+      var cards = [
+        {
+          q: "What is binary search?",
+          a: "An algorithm that finds an item in a sorted list by repeatedly dividing the search interval in half.",
+        },
+        {
+          q: "What is the time complexity?",
+          a: "O(log n) - logarithmic time complexity.",
+        },
+        {
+          q: "When can you use binary search?",
+          a: "Only on sorted arrays or lists.",
+        },
+        {
+          q: "How does binary search eliminate elements?",
+          a: "By comparing the target with the middle element and eliminating half the remaining elements each time.",
+        },
+      ];
+
+      var currentIndex = 0;
+      var showingAnswer = false;
+
+      function generateFlashcards() {
+        var btn = document.getElementById("generateFlashcardsBtn");
+        var loading = document.getElementById("flashcardLoading");
+        var display = document.getElementById("flashcardDisplay");
+
+        btn.disabled = true;
+        loading.classList.add("active");
+        display.style.display = "none";
+
+        setTimeout(function () {
+          loading.classList.remove("active");
+          display.style.display = "block";
+          currentIndex = 0;
+          showingAnswer = false;
+          document.getElementById("cardTitle").textContent = "QUESTION";
+          document.getElementById("cardText").textContent = cards[0].q;
+          document.getElementById("cardCount").textContent =
+            "Card 1 of " + cards.length;
+          document.getElementById("simpleCard").style.background =
+            "var(--gray)";
+          document.getElementById("simpleCard").style.color = "var(--white)";
+          btn.disabled = false;
+        }, 1000);
+      }
+
+      function flipCard() {
+        showingAnswer = !showingAnswer;
+        if (showingAnswer) {
+          document.getElementById("cardTitle").textContent = "ANSWER";
+          document.getElementById("cardTitle").style.color = "var(--black)";
+          document.getElementById("cardText").textContent =
+            cards[currentIndex].a;
+          document.getElementById("simpleCard").style.background =
+            "var(--honey)";
+          document.getElementById("simpleCard").style.color = "var(--black)";
         } else {
-          window.location.href = "signin.html";
+          document.getElementById("cardTitle").textContent = "QUESTION";
+          document.getElementById("cardTitle").style.color = "var(--honey)";
+          document.getElementById("cardText").textContent =
+            cards[currentIndex].q;
+          document.getElementById("simpleCard").style.background =
+            "var(--gray)";
+          document.getElementById("simpleCard").style.color = "var(--white)";
         }
-      });
+      }
+
+      function nextCard() {
+        if (currentIndex < cards.length - 1) {
+          currentIndex++;
+          showingAnswer = false;
+          document.getElementById("cardTitle").textContent = "QUESTION";
+          document.getElementById("cardText").textContent =
+            cards[currentIndex].q;
+          document.getElementById("cardCount").textContent =
+            "Card " + (currentIndex + 1) + " of " + cards.length;
+          document.getElementById("simpleCard").style.background =
+            "var(--gray)";
+          document.getElementById("simpleCard").style.color = "var(--white)";
+        }
+      }
+
+      function prevCard() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          showingAnswer = false;
+          document.getElementById("cardTitle").textContent = "QUESTION";
+          document.getElementById("cardText").textContent =
+            cards[currentIndex].q;
+          document.getElementById("cardCount").textContent =
+            "Card " + (currentIndex + 1) + " of " + cards.length;
+          document.getElementById("simpleCard").style.background =
+            "var(--gray)";
+          document.getElementById("simpleCard").style.color = "var(--white)";
+        }
+      }
     </script>
-    <script src="assets/js/playground-data.js"></script>
-    <script src="assets/js/playground.js"></script>
-    <script src="assets/js/tos-modal.js"></script>
   </body>
 </html>

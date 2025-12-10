@@ -9,7 +9,6 @@ A brutalist-design study tool that transforms class notes into AI-powered summar
 - **AI-Generated Summaries** - Convert notes into structured study guides
 - **Auto Flashcards** - Generate Q&A cards from your materials
 - **Study Podcasts** - Turn summaries into audio for on-the-go learning
-- **Peer Ratings** - Community-verified content quality
 - **Tiered Pricing** - Free, Plus ($10/mo), Premium ($20/mo)
 
 ## Quick Start
@@ -78,13 +77,13 @@ public/
 
 - **Andrew Gardner** - Frontend & UI/UX
 - **Jovan Fernandez** - Database & Backend
-- **Umar Farooq** - AI Integration & Payments
+- **Umar Farooq** - Account & Payments
 - **Elliot Cecere** - Project Manager
 
 ## Project Timeline
 
-**Duration**: September 19 - December 3, 2025  
-**Presentation**: December 10, 2025
+**Duration**: September 19 - December 15, 2025  
+**Presentation**: December 15, 2025
 
 ## Design Philosophy
 

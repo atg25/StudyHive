@@ -197,6 +197,10 @@ textarea {
   perspective: 1000px;
   margin: 3rem auto;
   max-width: 600px;
+  transform-style: preserve-3d;
+}
+.flashcard-wrapper-inner {
+  transform-style: preserve-3d;
 }
 .flashcard {
   width: 100%;
@@ -205,15 +209,17 @@ textarea {
   transform-style: preserve-3d;
   transition: transform 0.6s;
   cursor: pointer;
+  transform: rotateY(0deg);
 }
 .flashcard.flipped {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) !important;
 }
 .flashcard-face {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border: 4px solid var(--white);
   background: var(--gray);
   padding: 3rem;
@@ -221,6 +227,9 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.flashcard-front {
+  transform: rotateY(0deg);
 }
 .flashcard-back {
   transform: rotateY(180deg);
@@ -285,6 +294,41 @@ textarea {
   padding: 2rem;
   background: var(--gray);
   margin-top: 2rem;
+}
+
+.simple-flashcard {
+  max-width: 600px;
+  margin: 3rem auto;
+  min-height: 400px;
+  background: var(--gray);
+  border: 4px solid var(--white);
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.simple-flashcard:hover {
+  border-color: var(--honey);
+}
+
+.simple-flashcard #cardContent {
+  text-align: center;
+}
+
+.simple-flashcard h2 {
+  color: var(--honey);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+}
+
+.simple-flashcard p {
+  font-size: 1.5rem;
+  line-height: 1.6;
 }
 
 .podcast-player {
