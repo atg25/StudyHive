@@ -46,6 +46,16 @@
         color: var(--honey);
       }
 
+      .payment-row-divider {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-top: 2px solid var(--white);
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
       .form-group {
         margin-bottom: 1rem;
       }
@@ -122,12 +132,24 @@
             <span id="planName">Plus</span>
           </div>
           <div class="payment-row">
-            <span>Price:</span>
-            <span id="planPrice">$9.99/month</span>
+            <span>Billing Cycle:</span>
+            <span>Monthly</span>
           </div>
           <div class="payment-row">
-            <span style="font-weight: 700">Total:</span>
-            <span id="totalPrice" style="font-weight: 700">$9.99/month</span>
+            <span>Subtotal:</span>
+            <span id="subtotalPrice">$9.99</span>
+          </div>
+          <div class="payment-row">
+            <span>Shipping (Digital):</span>
+            <span id="shippingPrice">$0.00</span>
+          </div>
+          <div class="payment-row">
+            <span>Tax (6.625%):</span>
+            <span id="taxPrice">$0.66</span>
+          </div>
+          <div class="payment-row-divider">
+            <span>Total / Month:</span>
+            <span id="totalPrice">$15.93</span>
           </div>
         </div>
 
@@ -182,14 +204,30 @@
       var plan = urlParams.get("plan") || "plus";
 
       var planDetails = {
-        plus: { name: "Plus", price: "$9.99/month" },
-        premium: { name: "Premium", price: "$19.99/month" },
+        plus: { name: "Plus", price: 9.99 },
+        premium: { name: "Premium", price: 19.99 },
       };
 
       var currentPlan = planDetails[plan];
+      var shippingCost = 0.0;
+      var taxRate = 0.06625;
+
+      // Calculate totals
+      var subtotal = currentPlan.price;
+      var tax = subtotal * taxRate;
+      var total = subtotal + tax;
+
+      // Display plan name
       document.getElementById("planName").textContent = currentPlan.name;
-      document.getElementById("planPrice").textContent = currentPlan.price;
-      document.getElementById("totalPrice").textContent = currentPlan.price;
+
+      // Display prices
+      document.getElementById("subtotalPrice").textContent =
+        "$" + subtotal.toFixed(2);
+      document.getElementById("shippingPrice").textContent =
+        "$" + shippingCost.toFixed(2);
+      document.getElementById("taxPrice").textContent = "$" + tax.toFixed(2);
+      document.getElementById("totalPrice").textContent =
+        "$" + total.toFixed(2);
 
       var form = document.getElementById("paymentForm");
       form.addEventListener("submit", function (e) {
